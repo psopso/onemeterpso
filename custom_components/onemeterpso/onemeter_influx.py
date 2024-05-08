@@ -61,8 +61,10 @@ class OnemeterInflux:  # pylint: disable=too-many-instance-attributes
 
       _influx_points = []
       index = 0
+      flag = False
       for detail in self._onemeterdata:
         index = index + 1
+        flag = False
         point = {}
         point["measurement"]="kWh"
         point["tags"] = {}
@@ -72,12 +74,16 @@ class OnemeterInflux:  # pylint: disable=too-many-instance-attributes
 
         if detail['1_8_0'] != "":
           point["fields"]["value"] = float(detail['1_8_0'])
+          flag = True
         if detail['1_8_1'] != "":
           point["fields"]["valuehigh"] = float(detail['1_8_1'])
+          flag = True
         if detail['1_8_2'] != "":
           point["fields"]["valuelow"] = float(detail['1_8_2'])
+          flag = True
 
-        _influx_points.append(point)
+        if (flag):
+          _influx_points.append(point)
 
 #      _LOGGER.info(_influx_points)
       if self.influxdbtoken is None:
@@ -94,4 +100,4 @@ class OnemeterInflux:  # pylint: disable=too-many-instance-attributes
         )
 
       await hass.async_add_executor_job(cliwrite)
-      _LOGGER.info(str(index)+" points written.")
+      _LOGGER.debug(str(index)+" points written.")

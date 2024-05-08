@@ -31,12 +31,23 @@ class OnemeterReader:  # pylint: disable=too-many-instance-attributes
         self._onemeterthismonth = None
         self._onemeterpreviousmonth = None
 
+        self._value1_8_0 = None
+        self._value1_8_1 = None
+        self._value1_8_2 = None
+
     async def onemeterdate(self):
       return self._onemeterdate
     async def onemeterthismonth(self):
       return self._onemeterthismonth
     async def onemeterpreviousmonth(self):
       return self._onemeterpreviousmonth
+
+    async def obis180(self):
+      return self._value1_8_0
+    async def obis181(self):
+      return self._value1_8_1
+    async def obis182(self):
+      return self._value1_8_2
 
     @property
     def async_client(self):
@@ -65,13 +76,19 @@ class OnemeterReader:  # pylint: disable=too-many-instance-attributes
 
             mojedatetime = dateutil.parser.isoparse(output["lastReading"]["date"])
 
+            value1_8_0 = output["lastReading"]["OBIS"]["1_8_0"]  # Celkem
+            value1_8_1 = output["lastReading"]["OBIS"]["1_8_1"]  # VT
+            value1_8_2 = output["lastReading"]["OBIS"]["1_8_2"]  # NT
 
-            
             self._onemeterdate = mojedatetime.strftime("%d.%m.%Y, %H:%M:%S")
             self._onemeterthismonth = output["usage"]["thisMonth"]
             self._onemeterpreviousmonth = output["usage"]["previousMonth"]
 
-            _LOGGER.info("Datum: %s", mojedatetime.ctime())
+            self._value1_8_0 = value1_8_0
+            self._value1_8_1 = value1_8_1
+            self._value1_8_2 = value1_8_2
+
+            _LOGGER.debug("Datum: %s", mojedatetime.ctime())
 
             _LOGGER.debug("Test: %s", output["usage"]["thisMonth"])
             _LOGGER.debug("Test: %s", output["usage"]["previousMonth"])

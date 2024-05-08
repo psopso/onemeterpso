@@ -17,7 +17,7 @@
                     "influxdbhost": "db host",
                     "influxdbport": "db port",
                     "influxdbonemeter": "db onemeter",
-                    "influxdbusername": "db username/empty with token",
+                    "influxdbusername": "db username",
                     "influxdbuserpassword": "db password/token"
                 }
             }

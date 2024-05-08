@@ -22,6 +22,10 @@ THIS_MONTH_KEY="onemeterthismonth"
 PREVIOUS_MONTH_KEY="onemeterpreviousmonth"
 DUMMY_KEY="dummy"
 
+OBIS_1_8_0="obis180"
+OBIS_1_8_1="obis181"
+OBIS_1_8_2="obis182"
+
 SENSORS = (
     SensorEntityDescription(
         key=DATE_KEY,
@@ -40,6 +44,27 @@ SENSORS = (
     SensorEntityDescription(
         key=PREVIOUS_MONTH_KEY,
         name="Spotreba minuly mesic",
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL,
+        device_class=SensorDeviceClass.ENERGY,
+    ),
+    SensorEntityDescription(
+        key=OBIS_1_8_0,
+        name="Odecet celkem",
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL,
+        device_class=SensorDeviceClass.ENERGY,
+    ),
+    SensorEntityDescription(
+        key=OBIS_1_8_1,
+        name="Odecet VT",
+        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL,
+        device_class=SensorDeviceClass.ENERGY,
+    ),
+    SensorEntityDescription(
+        key=OBIS_1_8_2,
+        name="Odecet NT",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         state_class=SensorStateClass.TOTAL,
         device_class=SensorDeviceClass.ENERGY,

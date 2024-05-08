@@ -85,7 +85,7 @@ class OnemeterReaderDetail:  # pylint: disable=too-many-instance-attributes
               one1 = one
 
             if len(_onemeterdata) != 0:
-              _LOGGER.info("DebugReaderDetailPointLast %s", one1)
+              _LOGGER.debug("DebugReaderDetailPointLast %s", one1)
 
 #            jsondata = json.load(_onemeterdata[0])
 #            _LOGGER.info("DebugReaderDetailPoint180 %s", _onemeterdata[0]['C_1_0'])
