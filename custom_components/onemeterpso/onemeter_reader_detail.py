@@ -62,14 +62,21 @@ class OnemeterReaderDetail:  # pylint: disable=too-many-instance-attributes
 #        mojedatetime = dateutil.parser.isoparse(output["lastReading"]["date"])
         timeshift = ""
         _LOGGER.debug("shortreading:"+self._shortreading)
-        if ((self._shortreading == "1")or(self._firstrun == 1)):
-          self._firstrun = 0
+        if (self._shortreading == "1"):
           dt = datetime.now() - timedelta(days=1);
           _LOGGER.debug("timeshift:%s", timeshift)
           timeshift = "?from="+dt.strftime("%Y-%m-%d %H:%M:%S")
           _LOGGER.debug("timeshift:%s", timeshift)
         else:
-          _LOGGER.debug("NoTimeshift")
+          #self._shortreading == "0"
+          if (self._firstrun == 1):
+            self._firstrun = 0
+            dt = datetime.now() - timedelta(days=1);
+            _LOGGER.debug("timeshift:%s", timeshift)
+            timeshift = "?from="+dt.strftime("%Y-%m-%d %H:%M:%S")
+            _LOGGER.debug("timeshift:%s", timeshift)
+          else:
+            _LOGGER.debug("NoTimeshift")
 
         try:
             response = await self.async_client.get(
