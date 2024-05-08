@@ -43,6 +43,8 @@ class OnemeterReaderDetail:  # pylint: disable=too-many-instance-attributes
         self._auth = '{ header = ' + apikey  + '}'
         self._last_data = None
         self._shortreading = shortreading
+        self._firstrun = 1
+        _LOGGER.debug("shortreading:", shortreading)
 
     @property
     def async_client(self):
@@ -55,15 +57,19 @@ class OnemeterReaderDetail:  # pylint: disable=too-many-instance-attributes
 
         # Check if the Secure flag is set
         _LOGGER.debug("Onemeter getdatadetail: %s %s %s", self.url, self.deviceid, self.apikey)
+        _LOGGER.debug("shortreading1:", self._shortreading)
 
 #        mojedatetime = dateutil.parser.isoparse(output["lastReading"]["date"])
         timeshift = ""
-        _LOGGER.debug("=================================================="+self._shortreading);
-        if (self._shortreading == "1"):
+        _LOGGER.debug("shortreading:"+self._shortreading)
+        if ((self._shortreading == "1")or(self._firstrun == 1)):
+          self._firstrun = 0
           dt = datetime.now() - timedelta(days=1);
+          _LOGGER.debug("timeshift:%s", timeshift)
           timeshift = "?from="+dt.strftime("%Y-%m-%d %H:%M:%S")
-          _LOGGER.debug("Timeshift:%s", timeshift);
-        #2023-08-03T16:30:00.000Z
+          _LOGGER.debug("timeshift:%s", timeshift)
+        else:
+          _LOGGER.debug("NoTimeshift")
 
         try:
             response = await self.async_client.get(
