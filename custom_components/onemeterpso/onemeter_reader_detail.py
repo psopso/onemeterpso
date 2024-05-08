@@ -62,7 +62,7 @@ class OnemeterReaderDetail:  # pylint: disable=too-many-instance-attributes
         if (self._shortreading == "1"):
           dt = datetime.now() - timedelta(days=1);
           timeshift = "?from="+dt.strftime("%Y-%m-%d %H:%M:%S")
-          _LOGGER.debug(dt.strftime("%Y-%m-%d %H:%M:%S"));
+          _LOGGER.debug("Debug0:%s", dt.strftime("%Y-%m-%d %H:%M:%S"));
         #2023-08-03T16:30:00.000Z
 
         try:
