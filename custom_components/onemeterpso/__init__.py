@@ -200,11 +200,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         #onemeter_reader.get_inverters = False
         await coordinators["basic"].async_config_entry_first_refresh()
 
-    try:
-        await coordinators["detail"].async_config_entry_first_refresh()
-    except ConfigEntryAuthFailed:
+#    try:
+#        await coordinators["detail"].async_config_entry_first_refresh()
+#    except ConfigEntryAuthFailed:
         #onemeter_reader.get_inverters = False
-        await coordinators["detail"].async_config_entry_first_refresh()
+#        await coordinators["detail"].async_config_entry_first_refresh()
 
     try:
         await coordinators["detail10"].async_config_entry_first_refresh()
