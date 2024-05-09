@@ -253,6 +253,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     _LOGGER.debug("After async forward %s", onemeter_reader_detail.get_firstrun())
     onemeter_reader_detail.reset_firstrun()
+    onemeter_reader_detail10.reset_firstrun()
 
     return True
 
