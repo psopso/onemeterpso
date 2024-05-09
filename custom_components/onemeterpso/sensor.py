@@ -68,7 +68,7 @@ async def async_setup_entry(
 
     async_add_entities(entities, True)
 
-    _LOGGER.debug("AddEntities %s", entities)
+    _LOGGER.debug("Start of AddEntities %s", entities)
 
     coordinator: DataUpdateCoordinator = data[COORDINATORS]["detail"]
     coordinator10: DataUpdateCoordinator = data[COORDINATORS]["detail10"]
@@ -100,6 +100,8 @@ async def async_setup_entry(
 
 
     async_add_entities([ExampleSensor()], True)
+
+    _LOGGER.debug("End of AddEntities %s", entities)
 
 class OnemeterSensor(CoordinatorEntity, SensorEntity):
     """Representation of a Sensor."""

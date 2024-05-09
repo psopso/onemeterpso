@@ -194,6 +194,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 #        update_interval=SCAN_INTERVAL_DETAIL,
 #    )
 
+    _LOGGER.info("Before First Refresh", entry.unique_id)
+
     try:
         await coordinators["basic"].async_config_entry_first_refresh()
     except ConfigEntryAuthFailed:
@@ -212,7 +214,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         #onemeter_reader.get_inverters = False
         await coordinators["detail10"].async_config_entry_first_refresh()
 
-#    _LOGGER.info("unique_id %s", entry.unique_id)
+    _LOGGER.info("After First Refresh", entry.unique_id)
 #    raise ConfigEntryNotReady(
 #        f"Debug"
 #      )
@@ -243,10 +245,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 #        NAME: name,
 #    }
 
-    _LOGGER.debug("Pred async forward %s", PLATFORMS)
-
+    _LOGGER.debug("Before async forward %s", PLATFORMS)
+    # Forward the setup to the sensors
+    #hass.async_create_task(
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    #)
 
+    _LOGGER.debug("After async forward %s", onemeter_reader_detail.get_firstrun())
+    onemeter_reader_detail.reset_firstrun()
 
     return True
 

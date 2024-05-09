@@ -61,16 +61,15 @@ class OnemeterReaderDetail:  # pylint: disable=too-many-instance-attributes
 
 #        mojedatetime = dateutil.parser.isoparse(output["lastReading"]["date"])
         timeshift = ""
-        _LOGGER.debug("shortreading:"+self._shortreading)
+        _LOGGER.debug("shortreading: %s  firstrun: %d", self._shortreading,self._firstrun)
         if (self._shortreading == "1"):
           dt = datetime.now() - timedelta(days=1);
-          _LOGGER.debug("timeshift:%s", timeshift)
           timeshift = "?from="+dt.strftime("%Y-%m-%d %H:%M:%S")
           _LOGGER.debug("timeshift:%s", timeshift)
         else:
           #self._shortreading == "0"
           if (self._firstrun == 1):
-            self._firstrun = 0
+            #self._firstrun = 0
             dt = datetime.now() - timedelta(days=1);
             _LOGGER.debug("timeshift:%s", timeshift)
             timeshift = "?from="+dt.strftime("%Y-%m-%d %H:%M:%S")
@@ -129,3 +128,9 @@ class OnemeterReaderDetail:  # pylint: disable=too-many-instance-attributes
 
     async def get_full_serial_number(self):
         return "123456789"
+
+    def get_firstrun(self):
+      return self._firstrun
+
+    def reset_firstrun(self):
+      self._firstrun = 0
