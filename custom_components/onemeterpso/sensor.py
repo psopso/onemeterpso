@@ -99,7 +99,7 @@ async def async_setup_entry(
     async_add_entities(entities, True)
 
 
-    async_add_entities([ExampleSensor()], True)
+#    async_add_entities([ExampleSensor()], True)
 
     _LOGGER.debug("End of AddEntities %s", entities)
 
